@@ -18,6 +18,24 @@ Pytorch 1.1.0
 
 `train.py` To train the model. 
 
+`eval.py` To test the model. 
+
+## Train & Test
+
+For training, run
+
+`python train.py --dataset="SHA" --data_path="path to dataset" --save_path="path to save checkpoint"`
+
+For testing, run
+
+`python eval.py --dataset="SHA" --data_path="path to dataset" --save_path="path to checkpoint"`
+
 ## Result
 
-The network is training now, I will upload results and checkpoints soon. 
+ShanghaiTech part A: epoch367 MAE 60.43 MSE 98.24
+
+![](./logs/A.png)
+
+ShanghaiTech part B: epoch432 MAE 6.38 MSE 10.99
+
+![](./logs/B.png)

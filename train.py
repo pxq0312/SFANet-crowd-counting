@@ -11,13 +11,13 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--bs', default=8, type=int, help='batch size')
 parser.add_argument('--epoch', default=500, type=int, help='train epochs')
-parser.add_argument('--dataset', default='SHB', type=str, help='dataset')
+parser.add_argument('--dataset', default='SHA', type=str, help='dataset')
 parser.add_argument('--data_path', default=r'D:\dataset', type=str, help='path to dataset')
 parser.add_argument('--lr', default=1e-4, type=float, help='initial learning rate')
 parser.add_argument('--load', default=False, action='store_true', help='load checkpoint')
 parser.add_argument('--save_path', default=r'D:\checkpoint\SFANet', type=str, help='path to save checkpoint')
 parser.add_argument('--gpu', default=0, type=int, help='gpu id')
-parser.add_argument('--log', default='./logs', type=str, help='path to log')
+parser.add_argument('--log_path', default='./logs', type=str, help='path to log')
 
 args = parser.parse_args()
 
@@ -30,10 +30,10 @@ device = torch.device('cuda:' + str(args.gpu))
 
 model = Model().to(device)
 
-writer = SummaryWriter(args.log)
+writer = SummaryWriter(args.log_path)
 
-mseloss = nn.MSELoss(size_average=False).to(device)
-bceloss = nn.BCELoss(size_average=False).to(device)
+mseloss = nn.MSELoss(reduction='sum').to(device)
+bceloss = nn.BCELoss(reduction='sum').to(device)
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
 
 if args.load:
@@ -47,7 +47,7 @@ else:
     best_mae = 999999
     start_epoch = 0
 
-for epoch in range(start_epoch, args.epoch):
+for epoch in range(start_epoch, start_epoch + args.epoch):
     loss_avg, loss_att_avg = 0.0, 0.0
 
     for i, (images, density, att) in enumerate(train_loader):

@@ -31,7 +31,7 @@ for img_path in img_paths:
         if int(gt[i][1]) < img.shape[0] and int(gt[i][1]) >= 0 and int(gt[i][0]) < img.shape[1] and int(gt[i][0]) >= 0:
             k[int(gt[i][1]), int(gt[i][0])] = 1
             count += 1
-    print('Ignore {} wrong annotation'.format(len(gt) - count))
+    print('Ignore {} wrong annotation.'.format(len(gt) - count))
     k = gaussian_filter(k, 5)
     att = k > 0.001
     att = att.astype(np.float32)
